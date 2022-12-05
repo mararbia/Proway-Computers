@@ -11,11 +11,17 @@ export class CartService {
   constructor() { }
 
   getCart(){
-    return JSON.parse(localStorage.getItem("cart") || "");
+    this.items =  JSON.parse(localStorage.getItem("cart") || "[]");
+    return this.items;
   }
 
   addToCart(product: ICartProduct){
     this.items.push(product);
+    localStorage.setItem("cart", JSON.stringify(this.items));
+  }
+
+  removeCartProduct(productId: number){
+    this.items = this.items.filter(item => item.id !== productId);
     localStorage.setItem("cart", JSON.stringify(this.items));
   }
 
